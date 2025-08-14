@@ -32,7 +32,7 @@
         const video = document.querySelector('video');
         if (!video) return;
 
-    // Remove existing injected track
+        // Remove existing injected track
         const oldTrack = video.querySelector('track[data-injected="true"]');
         if (oldTrack) oldTrack.remove();
 
@@ -44,17 +44,9 @@
         track.src = URL.createObjectURL(blob);
         track.default = true;
         track.dataset.injected = "true";
-
-        track.addEventListener("load", () => {
-            for (const t of video.textTracks) {
-                t.mode = "showing"; // Ensure they are visible
-            }
-            console.log("Track loaded and forced to showing mode");
-    });
-
-    video.appendChild(track);
-    console.log("Injected WebVTT track for iOS fullscreen");
-}
+        video.appendChild(track);
+        console.log("Injected WebVTT track for iOS fullscreen");
+    }
 
     // Extract cues from YouTube mobile JSON
     function getCuesFromMobileYT() {
@@ -76,6 +68,7 @@
                             const [idx, time, ...txt] = lines;
                             const [start, end] = time.split(" --> ").map(parseVttTime);
                             cues.push({start, end, text: txt.join("\n")});
+                            alert(cues);
                         }
                     });
                     injectTrack(cues);
