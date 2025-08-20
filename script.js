@@ -69,8 +69,10 @@ setTimeout(() => {
     } else {
         alert("No injected <track> element found.");
     }
-}, 1000); // delay so injection finishes
 
-setTimeout(() => {
-    alert("✅ Debug code executed at all");
-}, 3000);
+    for (let i = 0; i < tracks.length; i++) {
+    let cues = tracks[i].cues;
+    alert(`Track[${i}] cues count: ${cues ? cues.length : "null"}`);
+}
+
+}, 1000); // delay so injection finishes
