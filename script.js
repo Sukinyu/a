@@ -70,3 +70,7 @@ setTimeout(() => {
         alert("No injected <track> element found.");
     }
 }, 1000); // delay so injection finishes
+
+setTimeout(() => {
+    alert("✅ Debug code executed at all");
+}, 3000);
