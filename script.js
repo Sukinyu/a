@@ -54,7 +54,7 @@
             const player = window.ytInitialPlayerResponse;
             if (!player?.captions?.playerCaptionsTracklistRenderer) return null;
             const tracks = player.captions.playerCaptionsTracklistRenderer.captionTracks;
-            alert(tracks.length);
+            alert(JSON.stringify(tracks,null,2));
             if (!tracks || !tracks.length) return null;
 
             // Fetch first track in WebVTT format
