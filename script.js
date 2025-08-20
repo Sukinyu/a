@@ -70,4 +70,4 @@ setTimeout(() => {
     } else {
         alert("No injected <track> element found.");
     }
-}
+}, 5000)
