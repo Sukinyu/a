@@ -18,7 +18,7 @@ function injectDirectTrack() {
     }
 
     const trackInfo = player.captions.playerCaptionsTracklistRenderer.captionTracks[0];
-    const absoluteUrl = "https://www.youtube.com" + trackInfo.baseUrl + "&fmt=vtt";
+    const absoluteUrl = trackInfo.baseUrl + "&fmt=vtt";
 
     // Remove old
     video.querySelectorAll('track[data-injected="true"]').forEach(t => t.remove());
@@ -40,39 +40,7 @@ setTimeout(injectDirectTrack, 500)
 
 // Debug helper for YouTube captions injection
 setTimeout(() => {
-    const video = document.querySelector('video');
-    if (!video) {
-        alert("No <video> element found!");
-        return;
-    }
-
-    const tracks = video.textTracks;
-    alert("Video element found. Track count: " + tracks.length);
-
-    if (tracks.length > 0) {
-        for (let i = 0; i < tracks.length; i++) {
-            const t = tracks[i];
-            alert(`Track[${i}] → label: ${t.label}, lang: ${t.language}, kind: ${t.kind}, mode: ${t.mode}`);
-        }
-
-        // Force the first track on
-        tracks[0].mode = "showing";
-        alert("Forced Track[0] mode to 'showing'");
-    } else {
-        alert("No tracks registered in video.textTracks yet.");
-    }
-
-    // Also check the <track> element itself
-    const el = video.querySelector('track[data-injected="true"]');
-    if (el) {
-        alert("Injected <track> element exists with src: " + el.src);
-    } else {
-        alert("No injected <track> element found.");
-    }
-
     for (let i = 0; i < tracks.length; i++) {
     let cues = tracks[i].cues;
     alert(`Track[${i}] cues count: ${cues ? cues.length : "null"}`);
-}
-
 }, 1000); // delay so injection finishes
