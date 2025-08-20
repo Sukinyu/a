@@ -37,8 +37,8 @@ function injectDirectTrack() {
     for (let i = 0; i < tracks.length; i++) {
     let cues = tracks[i].cues;
     alert(`Track[${i}] cues count: ${cues ? cues.length : "null"}`);
-}
+    }
 }
 
 // Run once video + ytInitialPlayerResponse exist
-setTimeout(injectDirectTrack, 400)
+setTimeout(injectDirectTrack, 400);
