@@ -69,4 +69,4 @@ setTimeout(() => {
     } else {
         alert("No injected <track> element found.");
     }
-}, 5000); // delay so injection finishes
+}, 1000); // delay so injection finishes
