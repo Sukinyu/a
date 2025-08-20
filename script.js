@@ -33,14 +33,12 @@ function injectDirectTrack() {
     video.appendChild(track);
 
     console.log("Injected native track from YouTube captions:", absoluteUrl);
-}
 
-// Run once video + ytInitialPlayerResponse exist
-setTimeout(injectDirectTrack, 500)
-
-// Debug helper for YouTube captions injection
-setTimeout(() => {
     for (let i = 0; i < tracks.length; i++) {
     let cues = tracks[i].cues;
     alert(`Track[${i}] cues count: ${cues ? cues.length : "null"}`);
-}}, 1000); // delay so injection finishes
+}
+}
+
+// Run once video + ytInitialPlayerResponse exist
+setTimeout(injectDirectTrack, 400)
