@@ -1,41 +1,23 @@
-function injectDirectTrack() {
-    const player = window.ytInitialPlayerResponse;
-    if (!player?.captions?.playerCaptionsTracklistRenderer?.captionTracks?.length) {
-        console.warn("No captions found");
-        return;
+async function injectJson3Captions(url) {
+  const res = await fetch(url);
+  const data = await res.json();
+
+  // Create a new track
+  const track = document.querySelector("video").addTextTrack("subtitles", "Injected Captions", "en");
+  track.mode = "showing"; // show by default
+
+  for (const event of data.events) {
+    const start = event.tStartMs / 1000;
+    const end = (event.tStartMs + (event.dDurationMs || 2000)) / 1000;
+    const text = (event.segs || []).map(s => s.utf8).join("") || "";
+
+    if (text.trim()) {
+      const cue = new VTTCue(start, end, text);
+      track.addCue(cue);
     }
+  }
 
-    const video = document.querySelector('video');
-    if (!video) {
-        console.warn("No video found");
-        return;
-    }
-
-    const trackInfo = player.captions.playerCaptionsTracklistRenderer.captionTracks[0];
-    const src = trackInfo.baseUrl;
-
-    // Remove old injected tracks
-    video.querySelectorAll('track[data-injected="true"]').forEach(t => t.remove());
-
-    const track = document.createElement('track');
-    track.kind = "subtitles";
-    track.label = trackInfo.name?.runs?.[0]?.text || "Injected Captions";
-    track.srclang = trackInfo.languageCode || "en";
-    track.src = src;
-    track.default = true;
-    track.dataset.injected = "true";
-    video.appendChild(track);
-
-    console.log("Injected native track from YouTube captions:", src);
-
-    
-    const ttList = video.textTracks;
-    for (let i = 0; i < ttList.length; i++) {
-       const tt = ttList[i];
-        console.log(`Track[${i}] "${tt.label}" mode=${tt.mode}, cues=${tt.cues ? tt.cues.length : "null"}`);
-        tt.mode = "showing"; // force it on
-        }
+  console.log("Injected", track.cues.length, "cues");
 }
-
-// Run once video + ytInitialPlayerResponse exist
-setTimeout(injectDirectTrack, 400);
+injectJson3Captions(ytInitialPlayerResponse.captions.playerCaptionsTracklistRenderer.captionTracks[0].baseUrl+"&fmt=json3")
+alert(ytInitialPlayerResponse.captions.playerCaptionsTracklistRenderer.captionTracks[0].baseUrl)
