@@ -1,5 +1,5 @@
-async function injectJson3Captions(url) {
-  const res = await fetch(url);
+async function injectJson3Captions() {
+  const res = await fetch(ytInitialPlayerResponse.captions.playerCaptionsTracklistRenderer.captionTracks[0].baseUrl+"&fmt=json3");
   const data = await res.json();
 
   // Create a new track
@@ -18,6 +18,6 @@ async function injectJson3Captions(url) {
   }
 
   console.log("Injected", track.cues.length, "cues");
+  alert(ytInitialPlayerResponse.captions.playerCaptionsTracklistRenderer.captionTracks[0].baseUrl)
 }
-injectJson3Captions(ytInitialPlayerResponse.captions.playerCaptionsTracklistRenderer.captionTracks[0].baseUrl+"&fmt=json3")
-alert(ytInitialPlayerResponse.captions.playerCaptionsTracklistRenderer.captionTracks[0].baseUrl)
+setTimeout(injectJson3Captions,200);
