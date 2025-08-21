@@ -20,4 +20,4 @@ async function injectJson3Captions() {
   console.log("Injected", track.cues.length, "cues");
   alert(ytInitialPlayerResponse.captions.playerCaptionsTracklistRenderer.captionTracks[0].baseUrl)
 }
-setTimeout(injectJson3Captions,200);
+injectJson3Captions()
