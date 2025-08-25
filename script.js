@@ -1,3 +1,18 @@
+function formatTime(ms) {
+  const totalSeconds = ms / 1000;
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+  const millis = Math.floor((totalSeconds - Math.floor(totalSeconds)) * 1000);
+
+  const hh = hours > 0 ? String(hours).padStart(2, "0") + ":" : "";
+  const mm = String(hours > 0 ? minutes : minutes).padStart(2, "0");
+  const ss = String(seconds).padStart(2, "0");
+  const mmm = String(millis).padStart(3, "0");
+
+  return `${hh}${mm}:${ss}.${mmm}`;
+}
+
 // Hook into YouTube's caption XHR
 const origOpen = XMLHttpRequest.prototype.open;
 
@@ -10,32 +25,35 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
 
         const video = document.querySelector("video");
         if (!video) return;
-        // Reuse track if it exists, else make one
-        const Track = document.createElement("track");
-        Track.default = true;  // important for iOS to try displaying it
-        Track.mode = true;
-        const track = Track.track;
+
+        let vtt = "WEBVTT\n\n";
+        data.events.forEach(ev => {
+          if (!ev.segs) return;
+          const text = ev.segs.map(s => s.utf8).join("").trim();
+          if (!text) return;
+
+          const start = formatTime(ev.tStartMs);
+          const end = formatTime(ev.tStartMs + (ev.dDurationMs || 2000));
+
+          vtt += `${start} --> ${end}\n${text}\n\n`;
+        });
+
+        const oldTrack = video.querySelector('track[data-injected="true"]');
+        if (oldTrack) oldTrack.remove();
+
+        const track = document.createElement("track");
         track.kind = "subtitles";
         track.label = "Custom CC";
         track.srclang = "en";
+        track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
+        track.default = true;
+        track.dataset.injected = "true";
 
-        video.appendChild(Track);
-        // Add cues for each event
-        for (const ev of data.events) {
-          if (!ev.segs) continue;
-          const text = ev.segs.map(s => s.utf8).join("").trim();
-          if (!text) continue;
+        video.appendChild(track);
+        console.log("Injected WebVTT track for iOS fullscreen");
 
-          const start = ev.tStartMs / 1000;
-          const end = (ev.tStartMs + (ev.dDurationMs || 2000)) / 1000;
-
-          // Prevent duplicate cues
-          if ([...track.cues].some(c => Math.abs(c.startTime - start) < 0.05)) continue;
-
-          track.addCue(new VTTCue(start, end, text));
-        }
       } catch (e) {
-        alert("Caption parse failed: " + e);
+        console.warn("Caption parse failed:", e);
       }
     }
   });
