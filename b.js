@@ -45,7 +45,7 @@ alert(data);
 vtt = "WEBVTT\n\n00:00:00.000 --> 01:00:00.000\nIs this working?"
         const track = document.createElement("track");
         track.kind = "captions";
-        track.mode = "showing";
+        track.mode = true;
         track.label = "Custom CC";
         track.srclang = "en";
         track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
