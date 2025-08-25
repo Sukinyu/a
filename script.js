@@ -1,4 +1,3 @@
-try {
 // Hook into YouTube's caption XHR
 const origOpen = XMLHttpRequest.prototype.open;
 
@@ -11,14 +10,14 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
 
         const video = document.querySelector("video");
         if (!video) return;
-
         // Reuse track if it exists, else make one
-        if (!video._ccTrack) {
-          video._ccTrack = video.addTextTrack("subtitles", "Custom CC", "en");
-          video._ccTrack.mode = "showing";
-          video._ccTrack.default = true;
-        }
-        const track = video._ccTrack;
+        const Track = document.createElement("track");
+        const track = Track.track;
+        track.kind = "subtitles";
+        track.label = "Custom CC";
+        track.srclang = "en";
+        track.default = true;  // important for iOS to try displaying it
+        video.appendChild(Track);
         // Add cues for each event
         for (const ev of data.events) {
           if (!ev.segs) continue;
@@ -40,4 +39,3 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
   });
   return origOpen.call(this, method, url, ...rest);
 };
-} catch (e) {alert("Failed: " + e);}
