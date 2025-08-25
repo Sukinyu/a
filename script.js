@@ -10,7 +10,7 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
 
         // Get video element
         const video = document.querySelector("video");
-        if (!video) return;
+        if (!video) {alert.("Didn't find video element"); return;}
 
         // Make a captions track
         let track = video.querySelector("track[kind='subtitles']");
