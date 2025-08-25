@@ -42,13 +42,12 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
         if (oldTrack) oldTrack.remove();
 
         const track = document.createElement("track");
-        track.kind = "subtitles";
+        track.kind = "captions";
         track.label = "Custom CC";
         track.srclang = "en";
         track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
         track.default = true;
         track.dataset.injected = "true";
-
         video.appendChild(track);
         console.log("Injected WebVTT track for iOS fullscreen");
 
