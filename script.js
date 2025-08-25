@@ -12,7 +12,7 @@ function formatTime(ms) {
 
   return `${hh}${mm}:${ss}.${mmm}`;
 }
-
+alert("hi")
 // Hook into YouTube's caption XHR
 const origOpen = XMLHttpRequest.prototype.open;
 
