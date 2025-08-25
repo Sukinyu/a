@@ -15,9 +15,9 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
         if (!video._ccTrack) {
           video._ccTrack = video.addTextTrack("subtitles", "Custom CC", "en");
           video._ccTrack.mode = "showing";
+          video._ccTrack.default = true;
         }
         const track = video._ccTrack;
-
         // Add cues for each event
         for (const ev of data.events) {
           if (!ev.segs) continue;
