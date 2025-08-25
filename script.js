@@ -53,7 +53,7 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
         console.log("Injected WebVTT track for iOS fullscreen");
 
       } catch (e) {
-        console.warn("Caption parse failed:", e);
+        alert("Caption parse failed: " + e);
       }
     }
   });
