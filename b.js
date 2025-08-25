@@ -51,6 +51,7 @@ vtt = "WEBVTT\n\n00:00:00.000 --> 01:00:00.000\nIs this working?"
         track.default = true;
         track.dataset.injected = "true";
         video.appendChild(track);
+alert(track);
 };
 
 setTimeout(injectCaptionsFromPlayer, 200);
