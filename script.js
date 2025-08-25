@@ -33,7 +33,7 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
           track.addCue(new VTTCue(start, end, text));
         }
       } catch (e) {
-        console.warn("Caption parse failed:", e);
+        alert("Caption parse failed: " + e);
       }
     }
   });
