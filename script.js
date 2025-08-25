@@ -1,6 +1,6 @@
 // Hook into YouTube's caption XHR
 const origOpen = XMLHttpRequest.prototype.open;
-
+alert("Hi");
 XMLHttpRequest.prototype.open = function (method, url, ...rest) {
   this.addEventListener("load", function () {
     if (url.includes("/api/timedtext") && this.responseText.startsWith("{")) {
