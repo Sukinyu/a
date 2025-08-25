@@ -1,43 +1,34 @@
-function injectDirectTrack() {
-    const player = window.ytInitialPlayerResponse;
-    if (!player?.captions?.playerCaptionsTracklistRenderer?.captionTracks?.length) {
-        console.warn("No captions found");
-        return;
-    }
+function injectCaptionsFromPlayer() {
+  const player = window.ytInitialPlayerResponse;
+  if (!player?.captions?.playerCaptionsTracklistRenderer?.captionTracks) return;
 
-    const video = document.querySelector('video');
-    if (!video) {
-        console.warn("No video found");
-        return;
-    }
+  const trackInfo = player.captions.playerCaptionsTracklistRenderer.captionTracks[0];
+  const video = document.querySelector("video");
+  if (!video || !trackInfo) return;
 
-    const trackInfo = player.captions.playerCaptionsTracklistRenderer.captionTracks[0];
-    const absoluteUrl = trackInfo.baseUrl + "&fmt=vtt";
+  const url = trackInfo.baseUrl + "&pot=Mlq3f81rUkG0Brc8Sb3X66CD2b_5LFvcmbyWCdAU62f4YnDZTWY1-tBntmhO4sV5mDQSUV5clQlRYexOnxDLClUPpDxoyldvLgyi_Elmy5m6wy5a6Qg_lVbzK6M%3D" + "&c=MWEB";
+  fetch(url)
+    .then(r => r.text())
+    .then(vttText => {
+      const oldTrack = video.querySelector('track[data-injected="true"]');
+      if (oldTrack) oldTrack.remove();
 
-    // Remove old injected tracks
-    video.querySelectorAll('track[data-injected="true"]').forEach(t => t.remove());
-
-    const track = document.createElement('track');
-    track.kind = "subtitles";
-    track.label = trackInfo.name?.runs?.[0]?.text || "Injected Captions";
-    track.srclang = trackInfo.languageCode || "en";
-    track.src = absoluteUrl;
-    track.default = true;
-    track.dataset.injected = "true";
-    video.appendChild(track);
-
-    console.log("Injected native track from YouTube captions:", absoluteUrl);
-
-    // Wait for track to load before logging cues
-    track.addEventListener("load", () => {
-        const ttList = video.textTracks;
-        for (let i = 0; i < ttList.length; i++) {
-            const tt = ttList[i];
-            console.log(`Track[${i}] "${tt.label}" mode=${tt.mode}, cues=${tt.cues ? tt.cues.length : "null"}`);
-            tt.mode = "showing"; // force it on
-        }
+      const track = document.createElement("track");
+      track.kind = "subtitles";
+      track.label = "Custom CC";
+      track.srclang = "en";
+      track.src = URL.createObjectURL(new Blob([vttText], { type: "text/vtt" }));
+      track.default = true;
+      track.dataset.injected = "true";
+      video.appendChild(track);
+      console.log("Injected WebVTT track on iOS via player response");
     });
 }
 
-// Run once video + ytInitialPlayerResponse exist
-setTimeout(injectDirectTrack, 200);
+// Poll until the player is ready
+const interval = setInterval(() => {
+  if (window.ytInitialPlayerResponse) {
+    clearInterval(interval);
+    injectCaptionsFromPlayer();
+  }
+}, 200);
