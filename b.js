@@ -12,7 +12,7 @@ function formatTime(ms) {
 
   return `${hh}${mm}:${ss}.${mmm}`;
 }
-
+alert("Test?");
 async function injectCaptionsFromPlayer() {
   const player = window.ytInitialPlayerResponse;
   if (!player?.captions?.playerCaptionsTracklistRenderer?.captionTracks) return;
