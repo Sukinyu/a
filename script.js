@@ -24,7 +24,7 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
         if (!data.events) return;
 
         const video = document.querySelector("video");
-        if (!video) return;
+        if (!video) {alert("No video found"); return;}
 
         let vtt = "WEBVTT\n\n";
         data.events.forEach(ev => {
