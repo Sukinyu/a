@@ -12,11 +12,13 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
         if (!video) return;
         // Reuse track if it exists, else make one
         const Track = document.createElement("track");
+        Track.default = true;  // important for iOS to try displaying it
+        Track.mode = true;
         const track = Track.track;
         track.kind = "subtitles";
         track.label = "Custom CC";
         track.srclang = "en";
-        track.default = true;  // important for iOS to try displaying it
+
         video.appendChild(Track);
         // Add cues for each event
         for (const ev of data.events) {
