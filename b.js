@@ -42,11 +42,12 @@ alert(data);
         const oldTrack = video.querySelector('track[data-injected="true"]');
         if (oldTrack) oldTrack.remove();
 */
+vtt = "WEBVTT\n\n 00:00:00.000 --> 01:00:00.000\nIs this working?"
         const track = document.createElement("track");
         track.kind = "captions";
         track.label = "Custom CC";
         track.srclang = "en";
-       // track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
+        track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
         track.default = true;
         track.dataset.injected = "true";
         video.appendChild(track);
