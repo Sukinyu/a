@@ -42,7 +42,7 @@ alert(data);
         const oldTrack = video.querySelector('track[data-injected="true"]');
         if (oldTrack) oldTrack.remove();
 */
-vtt = "WEBVTT\n\n00:00:00.000 --> 01:00:00.000\nIs this working?"
+//vtt = "WEBVTT\n\n00:00:00.000 --> 01:00:00.000\nIs this working?"
         const track = document.createElement("track");
         track.kind = "captions";
         track.label = "Custom CC";
