@@ -21,8 +21,9 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
     if (url.includes("/api/timedtext") && this.responseText.startsWith("{")) {
       try {
         const data = JSON.parse(this.responseText);
+alert(data);
         if (!data.events) return;
-
+      
         const video = document.querySelector("video");
         if (!video) {alert("No video found"); return;}
 
