@@ -12,11 +12,12 @@ function formatTime(ms) {
 
   return `${hh}${mm}:${ss}.${mmm}`;
 }
-alert("hi")
+
 // Hook into YouTube's caption XHR
 const origOpen = XMLHttpRequest.prototype.open;
 
 XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+alert("a")
   this.addEventListener("load", function () {
     if (url.includes("/api/timedtext") && this.responseText.startsWith("{")) {
       try {
