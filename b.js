@@ -18,7 +18,7 @@ async function injectCaptionsFromPlayer() {
   if (!player?.captions?.playerCaptionsTracklistRenderer?.captionTracks) return;
 
   const trackInfo = player.captions.playerCaptionsTracklistRenderer.captionTracks[0];
-   video = document.querySelector("video");
+  const video = document.querySelector("video");
   if (!video || !trackInfo) return;
 
   const url = trackInfo.baseUrl + "&pot=Mlq3f81rUkG0Brc8Sb3X66CD2b_5LFvcmbyWCdAU62f4YnDZTWY1-tBntmhO4sV5mDQSUV5clQlRYexOnxDLClUPpDxoyldvLgyi_Elmy5m6wy5a6Qg_lVbzK6M%3D" + "&c=MWEB" + "&fmt=json3"+"&tlang=en";
