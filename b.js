@@ -12,14 +12,14 @@ function formatTime(ms) {
 
   return `${hh}${mm}:${ss}.${mmm}`;
 }
-alert("Test");
+alert("Test!");
 async function injectCaptionsFromPlayer() {
   const player = window.ytInitialPlayerResponse;
-alert(!player?.captions?.playerCaptionsTracklistRenderer?.captionTracks)
   if (!player?.captions?.playerCaptionsTracklistRenderer?.captionTracks) return;
 
   const trackInfo = player.captions.playerCaptionsTracklistRenderer.captionTracks[0];
   const video = document.querySelector("video");
+alert(!video || !trackInfo)
   if (!video || !trackInfo) return;
 /*
   const url = trackInfo.baseUrl + "&pot=Mlq3f81rUkG0Brc8Sb3X66CD2b_5LFvcmbyWCdAU62f4YnDZTWY1-tBntmhO4sV5mDQSUV5clQlRYexOnxDLClUPpDxoyldvLgyi_Elmy5m6wy5a6Qg_lVbzK6M%3D" + "&c=MWEB" + "&fmt=json3"+"&tlang=en";
@@ -43,7 +43,7 @@ alert(data);
         const oldTrack = video.querySelector('track[data-injected="true"]');
         if (oldTrack) oldTrack.remove();
 */
-vtt = "WEBVTT\n\n00:00:00.000 --> 01:00:00.000\nIs this working?"
+//vtt = "WEBVTT\n\n00:00:00.000 --> 01:00:00.000\nIs this working?"
 alert(vtt);
         const track = document.createElement("track");
         track.kind = "captions";
