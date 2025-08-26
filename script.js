@@ -43,13 +43,13 @@ alert(data);
         const oldTrack = video.querySelector('track[data-injected="true"]');
 
         const track = (oldTrack) ? oldTrack : document.createElement("track");
-        track.kind = "captions";
         track.label = "Custom CC";
+        track.kind = "captions";
         track.srclang = "en";
         track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
         track.default = true;
         track.dataset.injected = "true";
-alert(track.track);
+alert(track.outerHTML);
         video.appendChild(track);
         console.log("Injected WebVTT track for iOS fullscreen");
 
