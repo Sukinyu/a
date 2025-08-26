@@ -15,7 +15,7 @@ function formatTime(ms) {
 
 // Hook into YouTube's caption XHR
 const origOpen = XMLHttpRequest.prototype.open;
-
+alert("Running~")
 XMLHttpRequest.prototype.open = function (method, url, ...rest) {
 alert("a")
   this.addEventListener("load", function () {
@@ -41,15 +41,15 @@ alert(data);
         });
 
         const oldTrack = video.querySelector('track[data-injected="true"]');
-        if (oldTrack) oldTrack.remove();
 
-        const track = document.createElement("track");
+        const track = (oldTrack) ? oldTrack : document.createElement("track");
         track.kind = "captions";
         track.label = "Custom CC";
         track.srclang = "en";
         track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
         track.default = true;
         track.dataset.injected = "true";
+alert(track.track);
         video.appendChild(track);
         console.log("Injected WebVTT track for iOS fullscreen");
 
