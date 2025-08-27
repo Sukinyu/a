@@ -17,7 +17,7 @@ javascript: function formatTime(ms) {
 const origOpen = XMLHttpRequest.prototype.open;
 alert("Running~")
 XMLHttpRequest.prototype.open = function (method, url, ...rest) {
-alert("a")
+
   this.addEventListener("load", function () {
     if (url.includes("/api/timedtext") && this.responseText.startsWith("{")) {
       try {
