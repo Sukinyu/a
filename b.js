@@ -1,4 +1,5 @@
-javascript:(() => {
+try {
+(() => {
   const script = document.createElement("script");
   script.textContent = `
     (function(){
@@ -18,3 +19,4 @@ javascript:(() => {
   document.documentElement.appendChild(script);
   script.remove();
 })();
+} catch (e) {alert("Error: " + e);}
