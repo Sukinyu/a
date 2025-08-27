@@ -1,7 +1,6 @@
 // --- Hook XHR ---
 const origOpen = XMLHttpRequest.prototype.open;
 XMLHttpRequest.prototype.open = function (method, url, ...rest) {
-  if (url.includes("")) {
     this.addEventListener("load", function () {
       try {
         if (this.responseText.startsWith("{")) {
@@ -13,7 +12,6 @@ XMLHttpRequest.prototype.open = function (method, url, ...rest) {
         console.warn("XHR parse fail", e);
       }
     });
-  }
   return origOpen.call(this, method, url, ...rest);
 };
 
@@ -22,7 +20,6 @@ const origFetch = window.fetch;
 window.fetch = async function (input, init) {
   let url = typeof input === "string" ? input : input.url;
 
-  if (url.includes("")) {
     alert("[Fetch Hook] Captions request "+ url);
 
     try {
@@ -46,7 +43,6 @@ window.fetch = async function (input, init) {
       console.error("Fetch hook error", err);
       throw err;
     }
-  }
 
   return origFetch(input, init);
 };
