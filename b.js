@@ -1,5 +1,5 @@
 const origOpen = XMLHttpRequest.prototype.open;
-
+alert("running script")
 XMLHttpRequest.prototype.open = function (method, url, ...rest) {
   this.addEventListener("load", function () {
     try {
