@@ -15,14 +15,14 @@ javascript: function formatTime(ms) {
 
 // Hook into YouTube's caption XHR
 const origOpen = XMLHttpRequest.prototype.open;
-alert("Running~")
+
 XMLHttpRequest.prototype.open = function (method, url, ...rest) {
 
   this.addEventListener("load", function () {
     if (url.includes("/api/timedtext") && this.responseText.startsWith("{")) {
       try {
         const data = JSON.parse(this.responseText);
-alert(data);
+        console.log(data);
         if (!data.events) return;
       
         const video = document.querySelector("video");
@@ -49,7 +49,7 @@ alert(data);
         track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
         track.default = true;
         track.dataset.injected = "true";
-alert(track.outerHTML);
+        console.log(track.outerHTML);
         video.appendChild(track);
         console.log("Injected WebVTT track for iOS fullscreen");
 
