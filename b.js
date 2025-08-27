@@ -1,17 +1,3 @@
-function formatTime(ms) {
-  const totalSeconds = ms / 1000;
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = Math.floor(totalSeconds % 60);
-  const millis = Math.floor((totalSeconds - Math.floor(totalSeconds)) * 1000);
-
-  const hh = hours > 0 ? String(hours).padStart(2, "0") + ":" : "";
-  const mm = String(hours > 0 ? minutes : minutes).padStart(2, "0");
-  const ss = String(seconds).padStart(2, "0");
-  const mmm = String(millis).padStart(3, "0");
-
-  return `${hh}${mm}:${ss}.${mmm}`;
-}
 async function injectCaptionsFromPlayer() {
   const player = window.ytInitialPlayerResponse;
   if (!player?.captions?.playerCaptionsTracklistRenderer?.captionTracks) return;
@@ -45,8 +31,7 @@ alert(vtt);
         track.kind = "captions";
         track.label = "Custom CC";
         track.srclang = "en";
-      //  track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
-        track.default = true;
+        track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
         track.dataset.injected = "true";
         video.appendChild(track);
 alert(track);
