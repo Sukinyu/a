@@ -1,7 +1,7 @@
 // --- Hook XHR ---
 const origOpen = XMLHttpRequest.prototype.open;
 XMLHttpRequest.prototype.open = function (method, url, ...rest) {
-  if (url.includes("/api/")) {
+  if (url.includes("")) {
     this.addEventListener("load", function () {
       try {
         if (this.responseText.startsWith("{")) {
@@ -22,7 +22,7 @@ const origFetch = window.fetch;
 window.fetch = async function (input, init) {
   let url = typeof input === "string" ? input : input.url;
 
-  if (url.includes("/api/")) {
+  if (url.includes("")) {
     alert("[Fetch Hook] Captions request "+ url);
 
     try {
