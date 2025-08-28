@@ -1,4 +1,9 @@
-javascript: function formatTime(ms) {
+// ==UserScript==
+// @name         Fix MWeb Youtube Fullscreen Captions
+// @author       Sukinyu
+// ==/UserScript==
+
+function formatTime(ms) {
   const totalSeconds = ms / 1000;
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
