@@ -1,2 +1,2 @@
 # Project for fixing iOS captions on youtube
-Does not work so far...
+Somewhat working
