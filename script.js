@@ -72,7 +72,7 @@ function hookXHR() {
     });
     return origOpen.call(this, method, url, ...rest);
   };
-  console.log("XHR hook installed");
+  alert("XHR hook installed");
 }
 
 // Run after page load
